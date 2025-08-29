@@ -1,0 +1,62 @@
+<style>
+/* movie-search.component.css */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+}
+
+/* movie-search.component.css */
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+</style>
+
+<h2>Buscar películas (Mock)</h2>
+    <input [formControl]="searchCtrl" placeholder="Escribe un título..." />
+
+<!-- movie-search.component.html -->
+<ul>
+  <li *ngFor="let movie of pagedMovies$ | async">
+    <a href="#" (click)="selectMovie(movie)">
+      {{ movie.title }} ({{ movie.release_date }})
+    </a>
+  </li>
+</ul>
+
+<!-- Controles de paginación -->
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+  <span>Página {{ currentPage }} de {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+</div>
+
+<!-- Modal simple -->
+<!-- Modal -->
+<div *ngIf="selectedMovie" class="modal-backdrop">
+  <div class="modal">
+    <h2>{{ selectedMovie.title }}</h2>
+    <p><strong>Fecha:</strong> {{ selectedMovie.release_date }}</p>
+    <p><strong>Idioma:</strong> {{ selectedMovie.idiom }}</p>
+    <p><strong>Descripción:</strong> {{ selectedMovie.overview }}</p>
+    <button (click)="closeModal()">Cerrar</button>
+  </div>
+</div>
